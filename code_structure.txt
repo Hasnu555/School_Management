@@ -1,0 +1,21 @@
+Code Structure Overview
+Models:
+
+Purpose: Define the structure and types of data stored in MongoDB using Mongoose.
+Location: Found in the models directory.
+Examples: studentModel.js, teacherModel.js, courseModel.js, classModel.js, markModel.js.
+Controllers:
+
+Purpose: Handle the main logic of the application.
+Functions: Create, read, update, and delete data (CRUD operations).
+Location: Found in the controllers directory.
+Examples: studentController.js, teacherController.js, courseController.js, classController.js, markController.js.
+Routes:
+
+Purpose: Define the API endpoints and link them to the appropriate controller functions.
+Location: Found in the routes directory.
+Examples: studentRoutes.js, teacherRoutes.js, courseRoutes.js, classRoutes.js, markRoutes.js.
+Server Setup:
+
+Purpose: Set up the Express server, connect to the MongoDB database, and configure middleware.
+Location: Found in the index.js or app.js file.
