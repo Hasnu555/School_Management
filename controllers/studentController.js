@@ -95,19 +95,16 @@ exports.addStudentToClass = async (req, res) => {
       const studentId = req.params.id;
       const classId = req.params.classId;
       
-      // Find the student by ID
       const student = await Student.findById(studentId);
       if (!student) {
         return res.status(404).send({ error: 'Student not found' });
       }
   
-      // Add the class if it's not already present
       if (!student.classes.includes(classId)) {
         student.classes.push(classId);
       }
   
       
-      // Save the updated student
       await student.save();
   
       res.status(200).send(student);
@@ -121,28 +118,23 @@ exports.addStudentToClass = async (req, res) => {
       const studentId = req.params.id;
       const classId = req.params.classId;
   
-      // Find the student by ID
       const student = await Student.findById(studentId);
       if (!student) {
         return res.status(404).send({ error: 'Student not found' });
       }
   
-      // Add the class if it's not already present
       if (!student.classes.includes(classId)) {
         student.classes.push(classId);
       }
   
-      // Find all courses for the specified class
       const courses = await Course.find({ classes: classId });
   
-      // Add each course to the student's courses if it's not already present
       courses.forEach(course => {
         if (!student.courses.includes(course._id)) {
           student.courses.push(course._id);
         }
       });
   
-      // Save the updated student
       await student.save();
   
       res.status(200).send(student);

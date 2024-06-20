@@ -8,7 +8,6 @@ exports.createCourse = async (req, res) => {
     const newCourse = new Course(req.body);
     await newCourse.save({ session });
 
-    // Update each teacher to include the new course and associated classes
     for (let teacherId of newCourse.teachers) {
       const teacher = await Teacher.findById(teacherId).session(session);
       if (!teacher) {
