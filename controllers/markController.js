@@ -39,7 +39,6 @@ exports.addMark = async (req, res) => {
   try {
     const { studentId, courseId, classId, teacherId, marks } = req.body;
 
-    // Validate existence of student, course, class, and teacher
     const student = await Student.findById(studentId);
     if (!student) {
       return res.status(404).send({ error: 'Student not found' });
@@ -60,17 +59,14 @@ exports.addMark = async (req, res) => {
       return res.status(404).send({ error: 'Teacher not found' });
     }
 
-    // Check if the student is enrolled in the class
     if (!student.classes.includes(classId)) {
       return res.status(400).send({ error: 'Student not enrolled in the specified class' });
     }
 
-    // Check if the student is enrolled in the course
     if (!student.courses.includes(courseId)) {
       return res.status(400).send({ error: 'Student not enrolled in the specified course' });
     }
 
-    // Create new marks entry
     const newMark = new Marks({
       student: studentId,
       course: courseId,
@@ -91,7 +87,6 @@ exports.addMultipleMarks = async (req, res) => {
   try {
     const { studentId, classId, marks } = req.body;
 
-    // Validate existence of student and class
     const student = await Student.findById(studentId);
     if (!student) {
       return res.status(404).send({ error: 'Student not found' });
@@ -102,7 +97,6 @@ exports.addMultipleMarks = async (req, res) => {
       return res.status(404).send({ error: 'Class not found' });
     }
 
-    // Check if the student is enrolled in the class
     if (!student.classes.includes(classId)) {
       return res.status(400).send({ error: 'Student not enrolled in the specified class' });
     }
@@ -112,7 +106,6 @@ exports.addMultipleMarks = async (req, res) => {
     for (const markEntry of marks) {
       const { courseId, teacherId, marks } = markEntry;
 
-      // Validate existence of course and teacher
       const course = await Course.findById(courseId);
       if (!course) {
         return res.status(404).send({ error: `Course not found for courseId ${courseId}` });
@@ -123,12 +116,10 @@ exports.addMultipleMarks = async (req, res) => {
         return res.status(404).send({ error: `Teacher not found for teacherId ${teacherId}` });
       }
 
-      // Check if the student is enrolled in the course
       if (!student.courses.includes(courseId)) {
         return res.status(400).send({ error: `Student not enrolled in the specified course ${courseId}` });
       }
 
-      // Create new marks entry
       const newMark = new Marks({
         student: studentId,
         course: courseId,
